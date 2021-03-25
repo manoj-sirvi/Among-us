@@ -47,5 +47,5 @@ void reshapeWindow(GLFWwindow *window, int width, int height) {
     // Matrices.projection = glm::perspective (fov, (GLfloat) fbwidth / (GLfloat) fbheight, 0.1f, 500.0f);
 
     // Ortho projection for 2D views
-    reset_screen();
+    // reset_screen();
 }
