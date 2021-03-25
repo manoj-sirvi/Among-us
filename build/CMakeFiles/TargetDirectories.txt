@@ -1,0 +1,9 @@
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/CMakeFiles/rebuild_cache.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/CMakeFiles/Among-Us.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/CMakeFiles/edit_cache.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/CMakeFiles/glad.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/libraries/glfw/CMakeFiles/rebuild_cache.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/libraries/glfw/CMakeFiles/edit_cache.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/libraries/glfw/src/CMakeFiles/rebuild_cache.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/libraries/glfw/src/CMakeFiles/glfw.dir
+/home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/build/libraries/glfw/src/CMakeFiles/edit_cache.dir
