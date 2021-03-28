@@ -71,17 +71,40 @@
 //     // this->position.y -= speed;
 // }
 
-Player::Player(int x, int y)
+Ball::Ball(int x, int y)
 {
+    // std::cout << "zishan"
+    //           << "\n";
     this->current_x = x;
     this->current_y = y;
+    this->draw();
+}
+int Ball::getx()
+{
+    return this->current_x;
+}
+int Ball::gety()
+{
+    return this->current_y;
+}
+void Ball::setx(int value)
+{
+    this->current_x = value;
+    // return this->current_x;
+}
+void Ball::sety(int value)
+{
+    this->current_y = value;
+    // return this->current_x;
 }
 
-void Player::draw()
+void Ball::draw()
 {
+    // std::cout << this->current_x << " " << this->current_y << "\n";
     int x = this->current_x;
     int y = this->current_y;
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_TRIANGLE_FAN);
+    // glBegin(GL_LINE_LOOP);
     for (int i = 0; i <= 20; i++)
     {
         float theta = 2.0f * M_PI * float(i) / float(40); //get the current angle
@@ -114,5 +137,29 @@ void Player::draw()
     glVertex2f(x + 2 - 5, y + 3);
     glVertex2f(x + 3 - 5, y + 2);
 
+    glEnd();
+
+    // std::cout << this->current_x << " " << this->current_y << "\n";
+}
+
+Coin::Coin(int x, int y)
+{
+    this->current_x = x;
+    this->current_y = y;
+}
+
+void Coin::draw()
+{
+    glBegin(GL_TRIANGLE_FAN);
+    for (int i = 0; i <= 40; i++)
+    {
+        float theta = 2.0f * M_PI * float(i) / float(40); //get the current angle
+
+        float x1 = 5 * cosf(theta); //calculate the x component
+        float y1 = 5 * sinf(theta); //calculate the y component
+
+        glColor3f(1, 0, 1);
+        glVertex2f(x1 + this->current_x, y1 + this->current_y); //output vertex
+    }
     glEnd();
 }

@@ -16,8 +16,10 @@ GLuint programID;
 GLFWwindow *window;
 int width = 15, height = 15;
 GridBox *grid;
-Player *player = NULL;
+Ball ball1;
+Coin task;
 int previous = 0;
+int manoj = -1;
 
 GridBox &getposition(int x, int y)
 {
@@ -97,7 +99,7 @@ GridBox &getposition(int x, int y)
 //     /* Objects should be created before any other gl function and shaders */
 //     // Create the models
 
-//     ball1 = Ball(0, 0, COLOR_RED);
+//     ball1 = ball1(0, 0, COLOR_RED);
 
 //     // Create and compile our GLSL program from the shaders
 //     programID = LoadShaders("../source/shaders/shader.vert", "../source/shaders/shader.frag");
@@ -261,35 +263,47 @@ void dfs(int x, int y)
     // vec1.clear();
     return;
 }
-void Gener_field()
+void Gener_field(int x, int y)
 {
-    bool f = 0;
-    int x = rand() % 10;
-    int y = rand() % 10;
-    Player special(x * 30 + 165, y * 30 + 165);
-    player = &special;
-    if (player != NULL)
-    {
-        // cout << "fgh"
-        //  << "\n";
-        player->draw();
-    }
-    cout << "yes"
-         << "\n";
+    // bool f = 0;
+
+    // cout << "wfhregfre"
+    //      << "\n";
+    // cout << &ball1 << "\n";
+    // // cout << "yes"
+    // cout << ball1->current_x << " " << ball1->current_y << "\n";
+    //      << "\n";
     dfs(x, y);
+
+    // cout << &(ball1->current_x) << " " << ball1->current_y << "\n";
+
+    // return {ball1->current_x, ball1->current_y};
 }
-void update_maze()
+void Get_maze()
 {
-    for (int i = 0; i < 10 * 10; i++)
+    // cout << "entering"
+    //      << "\n";
+    for (int i = 0; i < 100; i++)
     {
-        int x = i % 10 + 150;
-        int y = i / 10 + 150;
-        if (grid[i].walls.up == true)
+        if (grid[i].walls.up)
         {
-            remove_line(x, y, 0);
+            remove_line(i % 10, i / 10, 3);
+        }
+        if (grid[i].walls.down)
+        {
+            remove_line(i % 10, i / 10, 1);
+        }
+        if (grid[i].walls.left)
+        {
+            remove_line(i % 10, i / 10, 0);
+        }
+        if (grid[i].walls.right)
+        {
+            remove_line(i % 10, i / 10, 2);
         }
     }
 }
+
 GLuint loadTexture(char const *filename)
 {
 
@@ -342,6 +356,7 @@ void draw_texture()
 {
     char const *name = "../source/1.bmp";
     GLuint id = loadTexture(name);
+    // cout << id << "\n";
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, id);
     glBegin(GL_QUADS);
@@ -370,6 +385,9 @@ void display()
 
     glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    // cout << "drawing"
+    //      << " "
+    //      << "\n";
     draw_texture();
     double x = 1;
     glLoadIdentity();
@@ -390,20 +408,28 @@ void display()
         glVertex2f(450, x * 30);
     }
     glEnd();
+
     // int x1 = rand() % 10;
     // int y = rand() % 10;
-    // Player special(x1 * 30 + 165, y * 30 + 165);
-    // player = &special;
+    // ball1 special(x1 * 30 + 165, y * 30 + 165);
+    // ball1 = &special;
     // cout << "gh"
     //      << "\n";
-    // player = Player(195, 165);
-    if (player != NULL)
-    {
-        // cout << "fgh"
-        //  << "\n";
-        player->draw();
-    }
-    Gener_field();
+    // ball1 = ball1(195, 165);
+    // cout << ball1->current_x << " " << ball1->current_y << "\n";
+    // cout << &ball1 << "\n";
+
+    // cout << "fgh"
+    //  << "\n";
+    // cout << "in " << ball1->current_x << " " << ball1->current_y << "\n";
+    // cout << ball1->getx() << " " << ball1->gety() << "\n";
+    // cout << manoj << "\n";
+    // ball1 = Ball(165, 165);
+    ball1.draw();
+    task.draw();
+    Get_maze();
+
+    // Gener_field();
 
     // glFlush();
 
@@ -412,6 +438,160 @@ void display()
     // glEnd();
 
     glFlush();
+}
+void input_ticks(int key, int x, int y)
+{
+    // cout << ball1->getx() << " " << ball1->gety() << "\n";
+    // cout << x << " " << y << "\n";
+    // cout << manoj << "\n";
+    // if (ball1 != NULL)
+    // {
+    //     // cout << "enter "
+    //     //      << "\n";
+    //     // cout << ball1->current_x << " " << ball1->current_y << "\n";
+    //     // int x = ball1->current_x;
+    //     // int y = ball1->current_y;
+    //     // // cout << x1 << " " << y1 << "\n";
+    //     // // cout << (x1 - 165) / 30 << (y1 - 165) / 30 << "\n";
+    //     // GridBox Current = getposition((x - 165) / 30, (y - 165) / 30);
+    //     // switch (key)
+    //     // {
+    //     // case GLUT_KEY_UP:
+    //     //     if (Current.walls.up == 1)
+    //     //     {
+    //     //         ball1->current_y += 30;
+    //     //     }
+    //     //     break;
+    //     // case GLUT_KEY_DOWN:
+    //     //     if (Current.walls.down == 1)
+    //     //     {
+    //     //         ball1->current_y -= 30;
+    //     //     }
+    //     //     break;
+    //     // case GLUT_KEY_LEFT:
+    //     //     if (Current.walls.left == 1)
+    //     //     {
+    //     //         ball1->current_x -= 30;
+    //     //     }
+    //     //     break;
+    //     // case GLUT_KEY_RIGHT:
+    //     //     if (Current.walls.right == 1)
+    //     //     {
+    //     //         ball1->current_x += 30;
+    //     //     }
+    //     //     break;
+    //     // default:
+    //     //     break;
+    //     // }
+    // }
+    // else
+    //     return;
+    // display();
+}
+void input_enter(unsigned char key, int x, int y)
+{
+    // cout << "dewkfhj"
+    //      << "\n";
+    // cout << (int)key << "\n";
+    if (key == 13)
+    {
+        // cout << "pressed enter"
+        //      << "\n";
+        int x = rand() % 10;
+        int y = rand() % 10;
+        // Ball special(x * 30 + 165, y * 30 + 165);
+        // ball1 = &special;
+        // ball1->setx(x * 30 + 165);
+        // ball1->sety(y * 30 + 165);
+
+        // cout << "fgh"
+        //  << "\n";
+        ball1 = Ball(x * 30 + 165, y * 30 + 165);
+        task = Coin(165, 165);
+
+        // ball1.draw();
+
+        // cout << "x " << x << " " << y << "\n";
+        dfs(x, y);
+        // manoj = 100;
+
+        // cout << "x " << x << " " << y << "\n";
+
+        // ball1->current_y = re.second;
+        // cout << ball1->current_y << " " << 1 << "\n";
+
+        // ball1->current_x = re.first;
+        // // cout << "hgghf" << re.first << " " << re.second << "\n";
+        // cerr << "x " << ball1->current_x << " " << 1 << "\n";
+        // cerr << ball1->current_x << " " << 1 << "\n";
+        // cerr << ball1->current_x << " " << 1 << "\n";
+        // cerr << ball1->current_x << " " << 1 << "\n";
+        // cerr << ball1->current_x << " " << 1 << "\n";
+        // cerr << ball1->current_x << " " << 1 << "\n";
+
+        // cerr << "gen " << *(&(ball1->current_y)) << " " << ball1->current_x << "\n";
+
+        // cerr << ball1->current_y << " " << 1 << "\n";
+        // // cerr << "gen " << &ball1 << "\n";
+        // cerr << "gen " << (ball1->current_x) << " " << ball1->current_y << "\n";
+        // cerr << ball1->current_x << " " << ball1->current_y << "\n";
+    }
+    else
+    {
+        // return;
+        // cerr << ball1->current_x << "\n";
+        // cerr << ball1->current_y << "\n";
+
+        // cout << "enter "
+        //      << "\n";
+
+        int x1 = ball1.getx();
+        int y1 = ball1.gety();
+        // cout << x1 << " " << y1 << "\n";
+        // // cerr << (x1 - 165) / 30 << (y1 - 165) / 30 << "\n";
+        GridBox Current = getposition((x1 - 165) / 30, (y1 - 165) / 30);
+        switch (key)
+        {
+        case 119:
+            if (Current.walls.up == 1)
+            {
+                // ball1->current_y += 30;
+                ball1.sety(y1 + 30);
+            }
+            break;
+        case 115:
+            if (Current.walls.down == 1)
+            {
+                // ball1.current_y -= 30;
+                ball1.sety(y1 - 30);
+            }
+            break;
+        case 97:
+            if (Current.walls.left == 1)
+            {
+                // ball1.current_x -= 30;
+                ball1.setx(x1 - 30);
+            }
+            break;
+        case 100:
+            if (Current.walls.right == 1)
+            {
+                // ball1.current_x += 30;
+                ball1.setx(x1 + 30);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    // int x1 = ball1.getx();
+    // int y1 = ball1.gety();
+    // cout << x1 << " " << y1 << "\n";
+    ball1 = Ball(ball1.getx(), ball1.gety());
+    task = Coin(task.current_x, task.current_y);
+
+    display();
 }
 
 int main(int argc, char **argv)
@@ -431,6 +611,8 @@ int main(int argc, char **argv)
     // initGL(window, width, height);
     // glutInit(&argc, argv);
     glutDisplayFunc(display);
+    // glutSpecialFunc(input_ticks);
+    glutKeyboardFunc(input_enter);
     glutMainLoop();
 
     /* Draw in loop */
