@@ -1,5 +1,9 @@
 #include "ball.h"
 #include "main.h"
+#include <vector>
+#include <GL/freeglut.h>
+// #include <ft2build.h>
+// #include FT_FREETYPE_H
 
 // Ball::Ball(float x, float y, color_t color) {
 //     this->position = glm::vec3(x, y, 0);
@@ -71,12 +75,16 @@
 //     // this->position.y -= speed;
 // }
 
-Ball::Ball(int x, int y)
+Ball::Ball(int x, int y, float red1, float green, float blue)
 {
     // std::cout << "zishan"
     //           << "\n";
     this->current_x = x;
     this->current_y = y;
+    this->red = red1;
+    this->green = green;
+    this->blue = blue;
+
     this->draw();
 }
 int Ball::getx()
@@ -112,12 +120,12 @@ void Ball::draw()
         float x1 = 5 * cosf(theta); //calculate the x component
         float y1 = 5 * sinf(theta); //calculate the y component
 
-        glColor3f(0, 1, 1);
+        glColor3f(this->red, this->green, this->blue);
         glVertex2f(x1 + x, y1 + y); //output vertex
     }
     glEnd();
     glBegin(GL_TRIANGLES);
-    glColor3f(0, 0, 1);
+    glColor3f(this->red / 2, this->green / 2, this->blue);
     glVertex2f(x + 2, y + 2);
     glVertex2f(x + 2, y + 3);
     glVertex2f(x + 3, y + 2);
@@ -162,4 +170,103 @@ void Coin::draw()
         glVertex2f(x1 + this->current_x, y1 + this->current_y); //output vertex
     }
     glEnd();
+}
+
+Obstacles::Obstacles(int x, int y, int f)
+{
+    this->current_x = x;
+    this->current_y = y;
+    this->type = f;
+    if (f > 0)
+    {
+        this->score = 10;
+    }
+    else
+    {
+        this->score = -8;
+    }
+}
+void Obstacles::draw()
+{
+    if (this->type > 0)
+    {
+        glBegin(GL_TRIANGLE_FAN);
+        for (int i = 0; i <= 40; i++)
+        {
+            float theta = 2.0f * M_PI * float(i) / float(40); //get the current angle
+
+            float x1 = 5 * cosf(theta); //calculate the x component
+            float y1 = 5 * sinf(theta); //calculate the y component
+
+            glColor3f(1, 1, 0);
+            glVertex2f(x1 + this->current_x, y1 + this->current_y); //output vertex
+        }
+        glEnd();
+    }
+    else
+    {
+        if (this->type < 0)
+        {
+            glBegin(GL_TRIANGLE_FAN);
+            for (int i = 0; i <= 40; i++)
+            {
+                float theta = 2.0f * M_PI * float(i) / float(40); //get the current angle
+
+                float x1 = 5 * cosf(theta); //calculate the x component
+                float y1 = 5 * sinf(theta); //calculate the y component
+
+                glColor3f(0.5, 0.5, 0.5);
+                glVertex2f(x1 + this->current_x, y1 + this->current_y); //output vertex
+            }
+            glEnd();
+            // glClear(GL_COLOR_BUFFER_BIT);
+            glBegin(GL_POINTS);
+            for (GLfloat x = -2; x <= 2; x += 0.05)
+            {
+                GLfloat y = x * x;
+                glVertex2f(current_x + x, current_y + 5 + y);
+            }
+            glEnd();
+        }
+    }
+}
+
+void render_text(const char *text, float x, float y, float sx, float sy)
+{
+    // const char *p;
+
+    // for (p = text; *p; p++)
+    // {
+    //     if (FT_Load_Char(face, *p, FT_LOAD_RENDER))
+    //         continue;
+
+    //     glTexImage2D(
+    //         GL_TEXTURE_2D,
+    //         0,
+    //         GL_RED,
+    //         g->bitmap.width,
+    //         g->bitmap.rows,
+    //         0,
+    //         GL_RED,
+    //         GL_UNSIGNED_BYTE,
+    //         g->bitmap.buffer);
+
+    //     float x2 = x + g->bitmap_left * sx;
+    //     float y2 = -y - g->bitmap_top * sy;
+    //     float w = g->bitmap.width * sx;
+    //     float h = g->bitmap.rows * sy;
+
+    //     GLfloat box[4][4] = {
+    //         {x2, -y2, 0, 0},
+    //         {x2 + w, -y2, 1, 0},
+    //         {x2, -y2 - h, 0, 1},
+    //         {x2 + w, -y2 - h, 1, 1},
+    //     };
+
+    //     glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+    //     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    //     x += (g->advance.x / 64) * sx;
+    //     y += (g->advance.y / 64) * sy;
+    // }
 }

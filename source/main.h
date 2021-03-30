@@ -16,6 +16,7 @@
 // #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
+
 #define WIDTH 600
 #define HEIGHT 600
 
@@ -100,6 +101,7 @@ class GridBox
 {
 public:
     bool isVisited;
+    bool filled;
     struct walls
     {
         bool left;
@@ -112,6 +114,7 @@ public:
     {
         isVisited = false;
         walls.down = false;
+        filled = false;
         walls.right = false;
         walls.up = false;
         walls.left = false;

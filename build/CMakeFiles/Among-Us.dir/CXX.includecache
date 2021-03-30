@@ -55,6 +55,10 @@ ball.h
 /home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/source/ball.h
 main.h
 /home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/source/main.h
+vector
+-
+GL/freeglut.h
+-
 
 /home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/source/ball.h
 main.h
@@ -106,6 +110,8 @@ iostream
 vector
 -
 algorithm
+-
+GL/freeglut.h
 -
 
 /home/manoj/Documents/sem4/computer_graphics/Assignment2/Among-us/source/main.h
